@@ -51,17 +51,17 @@ var newDirection = function (userInput, head) {
 };
 
 // define function for moving one step depending on direction
-var moveHead = function (head, stepSize) {
+var moveHead = function (head, direction, stepSize) {
   // generate a new head, and return that new object
   var newHead = head;
   // move head here
-  if (head.direction === 1) {  // move up
+  if (direction === 1) {  // move up
     newHead.y -= stepSize;
-  } else if (head.direction === 2) { // move right
+  } else if (direction === 2) { // move right
     newHead.x += stepSize;
-  } else if (head.direction === -1) { // move down
+  } else if (direction === -1) { // move down
     newHead.y += stepSize;
-  } else if (head.direction === -2) { // move left
+  } else if (direction === -2) { // move left
     newHead.x -= stepSize;
   }
   return newHead;
@@ -70,7 +70,7 @@ var moveHead = function (head, stepSize) {
 // body advancement
 var advanceBody = function (head, body, food) {
   // Queue the body with the new head position
-  body.unshift(head);
+  body.unshift(clone(head));
   // if head is at a food, eating food, do not advance body
   if (!(head.x === food.x && head.y === food.y)) {
     // try to advance body, dequeue body, remove last item in body
@@ -89,17 +89,21 @@ var advanceHead = function (head, body, stepSize) {
   // newDirection(userInput, head);
 
   // advance the head
-  var newHead = moveHead(head, stepSize);
+  var newHead = moveHead(head, head.direction, stepSize);
   head = newHead;
 };
 
 // define bodyGeneration
 var generateBody = function (head, stepSize, startingLength) {
   // initialize output with only head
-  var output = [head];
+  var cl = clone(head);
+  console.log('WOAH WOAH WOAH', head);
+  var output = [clone(head)];
   // Fill the rest of body with nodes at the next location
   for (var i=1; i<startingLength; i++) {
-    output.push(moveHead(output[output.length-1], stepSize));
+    var bodyNext = clone(output[output.length - 1]);
+    moveHead(bodyNext, -head.direction, stepSize);
+    output.push(next);
   }
   return output;
 };
@@ -116,7 +120,7 @@ var init = function () {
       y: 100,
       direction: 2
     },
-    body: generateBody(this.head, this.stepSize, this.startingLength),
+    // body: generateBody(this.head, this.stepSize, this.startingLength),
     food: {
       x: 200,
       y: 200
@@ -126,6 +130,7 @@ var init = function () {
       height: 800
     }
   };
+  this.body = generateBody(this.head, this.stepSize, this.startingLength);
   // return these variables
   return gameState;
 };
