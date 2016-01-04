@@ -135,44 +135,6 @@ var init = function () {
   return gameState;
 };
 
-// for every frame, do the following:
-var checkFrame = function ( gameState, internalDriver ) {
-  // advance the head
-  advanceHead(gameState.head, gameState.body, gameState.stepSize);
-  console.log(gameState.head);
-  // advance the body
-  advanceBody(gameState.head, gameState.body, gameState.food);
-  // check collision with screen edge and self
-  var collision = collideWithEdge(gameState.head, gameState.gameWindow) || collideWithSelf(gameState.head, gameState.body);
-  // if there are collisions, end the loop
-  if (collision) {
-    clearInterval(internalDriver);
-    ///////////////////////////////////////////////////////////////
-    ////////////////// DO SOMETHING ///////////////////////////////
-    ///////////////////////////////////////////////////////////////
-  } else {
-    // console.log('not collided');
-    ///////////////////////////////////////////////////////////////
-    ////////////////// DO SOMETHING ///////////////////////////////
-    ///////////////////////////////////////////////////////////////
-
-  }
-};
-
-// gameDriver to drive the game
-var gameDriver = function () {
-  // initialize the game
-  var gameState = init();
-  // start interval
-  var intervalDriver = setInterval(function() {
-    checkFrame(gameState, intervalDriver);
-  }, gameState.speed);
-};
-
-
-// gameDriver();
-
-// exports.gameDriver = gameDriver;
 
 
 

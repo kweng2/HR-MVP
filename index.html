@@ -4,14 +4,15 @@
     <meta charset="utf-8" />
     <title>Snake!</title>
     <!-- <link rel="stylesheet" type="text/css" href="styles/style.css" /> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <script src="lib/angular.min.js"></script>
     <script src="snake.js"></script>
     <script src="app.js"></script>
   </head>
   <body>
     <h1>Snake</h1>
-    <div class="gameBoard" ng-controller="startGame">
-      <button ng-click="start()">Start Game!</button>
+    <div class="gameBoard" ng-controller="gameCtrl">
+      <button ng-click="startGame()">Start Game!</button>
+      <h2>Game state</h2>
     </div>
   </body>
 </html>
