@@ -5,16 +5,16 @@
 //   direction: 1, 
 // }
 
-// helper function to clone objects
+// helper function to clone for generating body
 var clone = function (obj) {
-  if (null === obj || "object" != typeof obj) {
-    return obj;
-  }
-  var copy = obj.constructor();
-  for (var attr in obj) {
-      if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-  }
-  return copy;
+    if (null === obj || "object" != typeof obj) {
+      return obj;
+    }
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
 };
 
 // check collision with screen edge
@@ -99,11 +99,11 @@ var advanceHead = function (head, body, stepSize) {
 var generateBody = function (head, stepSize, startingLength) {
   // initialize output with only head
   var output = [clone(head)];
-  var bodyDir = -head.direction;
   // Fill the rest of body with nodes at the next location
   for (var i=1; i<startingLength; i++) {
-    var tail = output[output.length-1];
-    output.push(moveHead(tail, bodyDir, stepSize));
+    var bodyNext = clone(output[output.length - 1]);
+    moveHead(bodyNext, -head.direction, stepSize);
+    output.push(bodyNext);
   }
   console.log(output);
   return output;
@@ -143,8 +143,7 @@ var checkFrame = function ( gameState, internalDriver ) {
   advanceBody(gameState.head, gameState.body, gameState.food);
   console.log(gameState.body[0]);
   // check collision with screen edge and self
-  // var collision = collideWithEdge(gameState.head, gameState.gameWindow) || collideWithSelf(gameState.head, gameState.body);
-  var collision = collideWithEdge(gameState.head, gameState.gameWindow);
+  var collision = collideWithEdge(gameState.head, gameState.gameWindow) || collideWithSelf(gameState.head, gameState.body);
   // if there are collisions, end the loop
   console.log('checking collisions');
   if (collision) {
@@ -160,7 +159,7 @@ var gameDriver = function () {
   // initialize the game
   var gameState = init();
   // start interval
-  var intervalDriver = setInterval(function () {
+  var intervalDriver = setInterval(function() {
     checkFrame(gameState, intervalDriver);
   }, gameState.speed);
 };
