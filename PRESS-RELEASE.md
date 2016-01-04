@@ -3,7 +3,8 @@
 This project's goal is to create a basic snake game. 
 The game will have a user input using arrow keys, or the w,a,s,d keys to control the snake
 
-The game should have the following rules:
+### The game should have the following rules:
+
 1. When the snake head reaches the edge of the gameboard, game is over
 2. When the snake head touches a segment of itself, the game is also over
 3. Occasionally, food will appear
@@ -11,7 +12,8 @@ The game should have the following rules:
 5. When the snake eats food, the score increments
 6. Display the current score, highscore, and list of highscores
 
-The user interface should contain:
+### The user interface should contain:
+
 1. User name log-in
 2. Display current high score with username next to it
 3. Display list of high scores with usernames next to it
