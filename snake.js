@@ -55,7 +55,7 @@ var newDirection = function (userInput, head) {
 // define function for moving one step depending on direction
 var moveHead = function (head, direction, stepSize) {
   // generate a new head, and return that new object
-  var newHead = clone(head);
+  var newHead = head;
   // move head here
   if (direction === 1) {  // move up
     newHead.y -= stepSize;
@@ -141,16 +141,13 @@ var checkFrame = function ( gameState, internalDriver ) {
   advanceHead(gameState.head, gameState.body, gameState.stepSize);
   // advance the body
   advanceBody(gameState.head, gameState.body, gameState.food);
-  console.log(gameState.body[0]);
   // check collision with screen edge and self
   var collision = collideWithEdge(gameState.head, gameState.gameWindow) || collideWithSelf(gameState.head, gameState.body);
   // if there are collisions, end the loop
-  console.log('checking collisions');
   if (collision) {
-    console.log('collided');
     clearInterval(internalDriver);
   } else {
-    console.log('not collided');
+    // console.log('not collided');
   }
 };
 
