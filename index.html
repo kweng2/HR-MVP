@@ -12,7 +12,9 @@
     <h1>Snake</h1>
     <div class="gameBoard" ng-controller="gameCtrl">
       <button ng-click="startGame()">Start Game!</button>
-      <canvas width={{gameState.gameWindow.width}} height={{gameState.gameWindow.height}} style="background-color:gray;" id="board"></canvas>
+      <div ng-keypress="changeDirection()">
+      <canvas width={{gameState.gameWindow.width}} height={{gameState.gameWindow.height}} style="background-color:gray;" id="board" ></canvas>
+      </div>
       <h2>Game state</h2>
       {{gameState.head.x}}, {{gameState.head.y}}
     </div>

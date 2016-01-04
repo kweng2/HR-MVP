@@ -41,14 +41,14 @@ var collideWithSelf = function (head, body) {
 };
 
 // check user input, takes user input, and outputs new direction
-var newDirection = function (userInput, head) {
+var newDirection = function (newDir, head) {
   //////////////////////////////////////////////////////////////////////
-  /////////// Assume there exists a variable called userInput //////////
+  /////////// Assume there exists a variable called newD/////////
   /////////////// MUST CHANGE THIS ASSUMPTION HERE   ///////////////////
   //////////////////////////////////////////////////////////////////////
-  if (userInput.direction !== head.direction && userInput.direciton !== -head.direction) {
+  if (newDir !== head.direction && newDir !== -head.direction) {
     // valid input, neither in the same direction nor reverse
-    head.direction = userInput.direction;
+    head.direction = newDir;
   }
 };
 
@@ -115,7 +115,7 @@ var init = function () {
   var gameState = {
     speed: 50,
     stepSize: 5,
-    startingLength: 5,
+    startingLength: 30,
     head: {
       x: 200,
       y: 100,
