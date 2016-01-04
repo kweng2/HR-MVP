@@ -5,6 +5,16 @@
 //   direction: 1, 
 // }
 
+// helper function to clone for generating body
+var clone = function (obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
+};
+
 // check collision with screen edge
 var collideWithEdge = function (head, gameWindow) {
   if ( head.x < 0 || head.x > gameWindow.width || head.y < 0 || head.y > gameWindow.height ) {
@@ -99,10 +109,10 @@ var init = function () {
   // declare game variables
   var gameState = {
     speed: 25,
-    stepSize: 5,
-    startingLength: 10,
+    stepSize: 10,
+    startingLength: 5,
     head: {
-      x: 100,
+      x: 700,
       y: 100,
       direction: 2
     },
@@ -124,11 +134,12 @@ var init = function () {
 var checkFrame = function ( gameState, internalDriver ) {
   // advance the head
   advanceHead(gameState.head, gameState.body, gameState.stepSize);
-  console.log(gameState.head.x, gameState.head.y);
+  console.log(gameState.head);
   // advance the body
   advanceBody(gameState.head, gameState.body, gameState.food);
+  console.log(gameState.body[1]);
   // check collision with screen edge and self
-  var collision = collideWithEdge(gameState.head, gameState.gameWindow) && collideWithSelf(head, body);
+  var collision = collideWithEdge(gameState.head, gameState.gameWindow) || collideWithSelf(gameState.head, gameState.body);
   // if there are collisions, end the loop
   if (collision) {
     clearInterval(internalDriver);
@@ -140,7 +151,9 @@ var gameDriver = function () {
   // initialize the game
   var gameState = init();
   // start interval
-  var intervalDriver = setInterval(checkFrame(gameState, intervalDriver), gameState.speed);
+  var intervalDriver = setInterval(function() {
+    checkFrame(gameState, intervalDriver);
+  }, gameState.speed);
 };
 
 
