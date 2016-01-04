@@ -7,7 +7,9 @@
 
 // helper function to clone for generating body
 var clone = function (obj) {
-    if (null == obj || "object" != typeof obj) return obj;
+    if (null === obj || "object" != typeof obj) {
+      return obj;
+    }
     var copy = obj.constructor();
     for (var attr in obj) {
         if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
@@ -96,15 +98,14 @@ var advanceHead = function (head, body, stepSize) {
 // define bodyGeneration
 var generateBody = function (head, stepSize, startingLength) {
   // initialize output with only head
-  var cl = clone(head);
-  console.log('WOAH WOAH WOAH', head);
   var output = [clone(head)];
   // Fill the rest of body with nodes at the next location
   for (var i=1; i<startingLength; i++) {
     var bodyNext = clone(output[output.length - 1]);
     moveHead(bodyNext, -head.direction, stepSize);
-    output.push(next);
+    output.push(bodyNext);
   }
+  console.log(output);
   return output;
 };
 
@@ -113,14 +114,13 @@ var init = function () {
   // declare game variables
   var gameState = {
     speed: 25,
-    stepSize: 10,
+    stepSize: 5,
     startingLength: 5,
     head: {
       x: 700,
       y: 100,
       direction: 2
     },
-    // body: generateBody(this.head, this.stepSize, this.startingLength),
     food: {
       x: 200,
       y: 200
@@ -130,7 +130,7 @@ var init = function () {
       height: 800
     }
   };
-  this.body = generateBody(this.head, this.stepSize, this.startingLength);
+  gameState.body = generateBody(gameState.head, gameState.stepSize, gameState.startingLength);
   // return these variables
   return gameState;
 };
@@ -139,10 +139,8 @@ var init = function () {
 var checkFrame = function ( gameState, internalDriver ) {
   // advance the head
   advanceHead(gameState.head, gameState.body, gameState.stepSize);
-  console.log(gameState.head);
   // advance the body
   advanceBody(gameState.head, gameState.body, gameState.food);
-  console.log(gameState.body[1]);
   // check collision with screen edge and self
   var collision = collideWithEdge(gameState.head, gameState.gameWindow) || collideWithSelf(gameState.head, gameState.body);
   // if there are collisions, end the loop
