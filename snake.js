@@ -105,7 +105,7 @@ var generateBody = function (head, stepSize, startingLength) {
     moveHead(bodyNext, -head.direction, stepSize);
     output.push(bodyNext);
   }
-  console.log(output);
+  // console.log(output);
   return output;
 };
 
@@ -139,6 +139,7 @@ var init = function () {
 var checkFrame = function ( gameState, internalDriver ) {
   // advance the head
   advanceHead(gameState.head, gameState.body, gameState.stepSize);
+  console.log(head);
   // advance the body
   advanceBody(gameState.head, gameState.body, gameState.food);
   // check collision with screen edge and self
@@ -146,8 +147,15 @@ var checkFrame = function ( gameState, internalDriver ) {
   // if there are collisions, end the loop
   if (collision) {
     clearInterval(internalDriver);
+    ///////////////////////////////////////////////////////////////
+    ////////////////// DO SOMETHING ///////////////////////////////
+    ///////////////////////////////////////////////////////////////
   } else {
     // console.log('not collided');
+    ///////////////////////////////////////////////////////////////
+    ////////////////// DO SOMETHING ///////////////////////////////
+    ///////////////////////////////////////////////////////////////
+
   }
 };
 
@@ -164,7 +172,7 @@ var gameDriver = function () {
 
 gameDriver();
 
-
+exports.gameDriver = gameDriver;
 
 
 
