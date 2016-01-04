@@ -1,4 +1,4 @@
-** Press Release
+## Press Release
 
 This project's goal is to create a basic snake game. 
 The game will have a user input using arrow keys, or the w,a,s,d keys to control the snake
@@ -16,5 +16,8 @@ The user interface should contain:
 2. Display current high score with username next to it
 3. Display list of high scores with usernames next to it
 
-Given the above outlines, the username and score should be stored in a database, but only store one entry per user, storing the highest score for that user. When the game ends, compare current score and high-score for that user and store if current score is higher than the high-score.
+Given the above outlines, the username and score should be stored in a database, but only store one entry per player, storing the highest score for that player. When the game ends, compare current score and high-score for that player and store if current score is higher than the high-score.
 
+Attempt to use Mongoose to store the players and player highscore. User Angular to display players and their highscores.
+
+Attempt to use window canvas to display the gameboard.
