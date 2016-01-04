@@ -113,11 +113,11 @@ var generateBody = function (head, stepSize, startingLength) {
 var init = function () {
   // declare game variables
   var gameState = {
-    speed: 25,
+    speed: 50,
     stepSize: 5,
     startingLength: 5,
     head: {
-      x: 700,
+      x: 200,
       y: 100,
       direction: 2
     },
@@ -126,8 +126,8 @@ var init = function () {
       y: 200
     },
     gameWindow: {
-      width: 800,
-      height: 800
+      width: 500,
+      height: 400
     }
   };
   gameState.body = generateBody(gameState.head, gameState.stepSize, gameState.startingLength);
