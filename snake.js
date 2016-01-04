@@ -139,7 +139,7 @@ var init = function () {
 var checkFrame = function ( gameState, internalDriver ) {
   // advance the head
   advanceHead(gameState.head, gameState.body, gameState.stepSize);
-  console.log(head);
+  console.log(gameState.head);
   // advance the body
   advanceBody(gameState.head, gameState.body, gameState.food);
   // check collision with screen edge and self
@@ -170,9 +170,9 @@ var gameDriver = function () {
 };
 
 
-gameDriver();
+// gameDriver();
 
-exports.gameDriver = gameDriver;
+// exports.gameDriver = gameDriver;
 
 
 
