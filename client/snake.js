@@ -111,7 +111,7 @@ var init = function () {
     growing: false,
     counter: 0,
     speed: 50,
-    stepSize: 10,
+    stepSize: 13,
     startingLength: 15,
     head: {
       x: 200,
