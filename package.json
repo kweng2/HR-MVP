@@ -8,6 +8,7 @@
     "express": "~4.13.3",
     "request": "^2.34.0",
     "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.14.2",
     "mongoose": "~4.3.4"
   }
 }
