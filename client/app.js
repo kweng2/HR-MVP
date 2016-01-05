@@ -34,7 +34,11 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     return $http({
       method: 'PUT',
       url: '/api/users',
-      data: 0//STUFF HERE
+      data: {
+        name: $scope.playerName,
+        highScore: $scope.gameState.body.length
+      }
+      //STUFF HERE
       /////////////////////////////////////////////////
       //////////// substitute new high score //////////
       /////////////////////////////////////////////////
@@ -46,10 +50,14 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
 
   // When player enters a name
   $scope.submitPlayerName = function () {
-    // console.log($scope.playerName);
     // Hide the cover and hide the name input field
     $scope.showInput = false;
-    addUsers($http, $scope);
+
+    var addedUser = addUsers($http, $scope);
+    addedUser.then(function(res){
+      $scope.currentHighScore = res.highScore;
+      $scope.currentName = res.name;
+    });
   };
 
 
@@ -112,6 +120,11 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
       ///////////////////////////////////////////////////////////////
       ////////////////// DO SOMETHING ///////////////////////////////
       ///////////////////////////////////////////////////////////////
+      // check to see if current score is greater than this player's highscore
+      if ($scope.gameState.body.length > $scope.currentHighScore) {
+        $scope.currentHighScore = $scope.gameState.body.length;
+        updateUserScore();
+      }
     } else {
       ///////////////////////////////////////////////////////////////
       ////////////////// DO SOMETHING ///////////////////////////////

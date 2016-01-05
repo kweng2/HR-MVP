@@ -29,11 +29,14 @@ app.get('/api/users', function (req, res) {
 app.post('/api/users', function (req, res) {
   console.log('posting user', req.body);
   DBcontroller.post(req.body, function (err, addedUser) {
-    if (err) {
-      return res.json({error: err});
-    } else {
-      return res.json(addedUser);
-    }
+    // if (err) {
+    //   console.log('errored', err);
+    //   return res.json({error: err});
+    // } else {
+    //   console.log(addedUser);
+    //   return res.json(addedUser);
+    // }
+    return res.json(addedUser);
   });
 });
 
@@ -48,7 +51,7 @@ app.delete('/api/users', function (req, res) {
 });
 
 app.put('/api/users', function (req, res) {
-  console.log(req.body.name);
+  console.log('updating user', req.body.name);
   // console.log(req.params);
   DBcontroller.updateOne(req.body.name, req.body, function(err, student) {
     if (err) {

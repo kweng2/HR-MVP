@@ -6,9 +6,9 @@ exports.get = function(query, callback) {
 
 exports.post = function(player, callback) {
   // if player already exists, do not add player
-  Player.find({'name': player.name}, function (err, existingPlayer) {
+  Player.findOne({'name': player.name}, function (err, existingPlayer) {
     if(existingPlayer) {
-      callback('Player already exists');
+      callback(null, existingPlayer);
     } else {
       Player.create(player, callback);
     }
