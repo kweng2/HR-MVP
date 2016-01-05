@@ -1,6 +1,52 @@
 var Snake = angular.module('Snake', []);
 
-Snake.controller('gameCtrl', function ($scope, $window, $interval) {
+Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
+  // initialize the controller
+
+  
+  var getUsers = function ($http, $scope) {
+    return $http({
+      method: 'GET',
+      url: '/api/users'
+    })
+    .then(function (resp) {
+      return resp.data;
+    });
+  };
+
+  var addUsers = function ($http, $scope) {
+    return $http({
+      method: 'POST',
+      url: '/api/users',
+      data: 0//STUFF HERE
+      /////////////////////////////////////////////////
+      //////////// substitute new high score //////////
+      /////////////////////////////////////////////////
+    })
+    .then(function (resp) {
+      return resp.data;
+    });
+  };
+
+  var updateUserScore = function ($http, $scope) {
+    return $http({
+      method: 'PUT',
+      url: '/api/users',
+      data: 0//STUFF HERE
+      /////////////////////////////////////////////////
+      //////////// substitute new high score //////////
+      /////////////////////////////////////////////////
+    })
+    .then(function (resp) {
+      return resp.data;
+    });
+  };
+
+
+  $scope.allUsers = getUsers($http, $scope);
+
+
+
   $window.onkeypress = function(e) {
     var newDir;  
     if (e.charCode === 119) {         // if the key is w, for up
