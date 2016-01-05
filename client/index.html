@@ -11,7 +11,7 @@
   <body ng-app='Snake'>
     <div id="container" ng-controller="gameCtrl">
 
-      <div class="cover" ng-show="showInput">
+      <div class="cover" ng-show="showInput" >
         <div class="inputName">
           <h1>Input Player Name</h1>
           <form ng-submit="submitPlayerName()" class="inputField">
@@ -20,23 +20,26 @@
         </div>
       </div>
 
+      <div class="gameInstruction" ng-show="gameInstruct"><h1>Press K to start game</h1></div>
+
       <div class="gameBoard">
         <span class="title-left">
           <h1>Snake</h1>
-          <button ng-click="startGame()">Start Game!</button>
+          <!-- <button ng-click="startGame()">Start Game!</button> -->
         </span>
         <span class="thisPlayer"><h1>{{playerName}}</h1></span>
         <div ng-keypress="changeDirection()">
-          <canvas width={{gameState.gameWindow.width}} height={{gameState.gameWindow.height}} style="background-color:gray;" id="board" ></canvas>
+          <canvas width={{gameState.gameWindow.width}} height={{gameState.gameWindow.height}} id="board" ></canvas>
         </div>
         <div style="float:left; width:220px">
           <h2>Game state</h2>
-          Current Location: {{gameState.head.x}}, {{gameState.head.y}}<br>
-          Current Length: {{gameState.body.length}}
+          Current Score: {{gameState.body.length}}
         </div>
         <div style="float:right; margin-left:100px;">
           <h2>Leaderboard</h2>
+          <ol>
             <li ng-repeat="player in allPlayers | orderBy: '-highScore'">{{player.name}}: {{player.highScore}}</li>
+          </ol>
         </div>
       </div>
     </div>

@@ -15,18 +15,18 @@ exports.post = function(player, callback) {
   });
 };
 
-// exports.getOne = function(query, callback) {
-//   Player.findOne(query, callback);
-// };
-
 exports.updateOne = function(name, updated, callback) {
   Player.findOneAndUpdate({'name': name}, updated, {new: true}, callback);
 };
 
+exports.delete= function(query, callback) {
+  Player.remove(query, callback);
+};
+
+// exports.getOne = function(query, callback) {
+//   Player.findOne(query, callback);
+// };
 // exports.deleteOne = function(id, callback) {
 //   Player.findOneAndRemove({_id: id}, callback);
 // };
 
-exports.delete= function(query, callback) {
-  Player.remove(query, callback);
-};

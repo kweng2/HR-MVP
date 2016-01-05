@@ -94,7 +94,6 @@ var generateBody = function (head, stepSize, startingLength) {
     moveHead(bodyNext, -head.direction, stepSize);
     output.push(bodyNext);
   }
-  // console.log(output);
   return output;
 };
 

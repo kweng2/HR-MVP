@@ -1,11 +1,8 @@
 var Snake = angular.module('Snake', []);
 
 Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
-
-  $scope.showInput = true;
-
-  // initialize the controller
-  var getUsers = function ($http, $scope) {
+  // helper function to query database for previous players
+  var getPlayers = function ($http, $scope) {
     return $http({
       method: 'GET',
       url: '/api/users'
@@ -15,6 +12,7 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     });
   };
 
+  // helper function to add user to database
   var addUsers = function ($http, $scope) {
     return $http({
       method: 'POST',
@@ -30,6 +28,7 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     });
   };
 
+  // helper function to update player score in database
   var updateUserScore = function ($http, $scope) {
     return $http({
       method: 'PUT',
@@ -38,21 +37,20 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
         name: $scope.playerName,
         highScore: $scope.gameState.body.length
       }
-      //STUFF HERE
-      /////////////////////////////////////////////////
-      //////////// substitute new high score //////////
-      /////////////////////////////////////////////////
     })
     .then(function (resp) {
       return resp.data;
     });
   };
 
-  // When player enters a name
+  // When player enters a name, remove showInput, and show game instructions
   $scope.submitPlayerName = function () {
     // Hide the cover and hide the name input field
     $scope.showInput = false;
+    // Display game instruction
+    $scope.gameInstruct = true;
 
+    // after adding user, set current high score
     var addedUser = addUsers($http, $scope);
     addedUser.then(function(res){
       $scope.currentHighScore = res.highScore;
@@ -60,14 +58,7 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     });
   };
 
-
-  // get all previous players
-  getUsers($http, $scope).then(function (res) {
-    $scope.allPlayers = Array.prototype.slice.call(res);
-  });
-
-
-
+  // Translate wasd and k to user inputs
   $window.onkeypress = function(e) {
     var newDir = null;
     if (e.charCode === 119) {         // if the key is w, for up
@@ -78,6 +69,12 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
       newDir = -1;
     } else if (e.charCode === 97) {   // key is a for left
       newDir = -2;
+    } else if (e.charCode === 107) {  // key is k for start Game
+      if(!$scope.inGame && !$scope.showInput) {
+        $scope.gameInstruct = false;
+        $scope.startGame();
+        $scope.inGame = true;
+      }
     }
     // apply new direction to head
     if (newDir !== null) {
@@ -85,10 +82,7 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     }
   };
 
-  // initialize game
-  $scope.gameState = init();
   $scope.startGame = function () {
-    console.log($window.playerName);
     // initialize the game
     $scope.gameState = init();
 
@@ -104,9 +98,9 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
 
   // check game states per frame
   var checkFrame = function (gameState, $scope, $interval) {
+    // advance head
     advanceHead(gameState);
     // advance the body
-    // advanceBody(gameState.head, gameState.body, gameState.food, gameState);
     advanceBody(gameState);
     // check food situation
     if(gameState.needFood) {
@@ -117,13 +111,22 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     // if there are collisions, end the loop
     if (collision) {
       $interval.cancel($scope.eachFrame);
+      $scope.gameInstruct = true;
+      $scope.inGame = false;
       ///////////////////////////////////////////////////////////////
       ////////////////// DO SOMETHING ///////////////////////////////
       ///////////////////////////////////////////////////////////////
       // check to see if current score is greater than this player's highscore
       if ($scope.gameState.body.length > $scope.currentHighScore) {
+        // set player's highscore to be the current score
         $scope.currentHighScore = $scope.gameState.body.length;
-        updateUserScore();
+        // update the score in the database
+        updateUserScore($http, $scope).then(function(res) {
+          // update the leaderboard
+          getPlayers($http, $scope).then(function (res) {
+            $scope.allPlayers = res;
+          });
+        });
       }
     } else {
       ///////////////////////////////////////////////////////////////
@@ -149,5 +152,19 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     }
     $scope.canvasCtx.fillRect($scope.gameState.food.x, $scope.gameState.food.y, w, h);
   };
+
+  // Controller initialization code
+  $scope.showInput = true;
+  $scope.gameInstruct = false;
+  $scope.inGame = false;
+
+    // Update leaderboard
+  getPlayers($http, $scope).then(function (res) {
+    $scope.allPlayers = res;
+  });
+
+  // initialize game
+  $scope.gameState = init();
+
 });
 

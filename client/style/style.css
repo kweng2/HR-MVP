@@ -7,6 +7,25 @@ h1 {
   margin-bottom: 10px;
 }
 
+ol {
+  margin-left: -20px;
+  margin-top: -10px;
+}
+
+.gameInstruction {
+  display: block;
+  position: relative;
+  z-index: 8;
+  top: 200px;
+  width: 400px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+
 .cover {
   display: block;
   position: absolute;
@@ -28,12 +47,19 @@ h1 {
   height: 100px;
   margin-left:auto;
   margin-right:auto;
+  text-align: center;
 }
 
 #container {
   margin-left: auto;
   margin-right: auto;
   width: 800px;
+}
+
+#board {
+  border: 1px solid black;
+  /*border-color: black;*/
+  /*background-color:gray;*/
 }
 
 .gameBoard {
@@ -59,7 +85,15 @@ form input[type=text], form input[type=password] {
   width: 360px;
   display: block;
   font-size: 13px;
-  padding: 5px;
-  margin-bottom: 5px;
+  padding: 10px;
+  /*margin-bottom: 5px;*/
+  margin-left: auto;
+  margin-right: auto;
 }
+
+
+
+
+
+
 
