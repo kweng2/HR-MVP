@@ -2,8 +2,6 @@ var Snake = angular.module('Snake', []);
 
 Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
   // initialize the controller
-
-  
   var getUsers = function ($http, $scope) {
     return $http({
       method: 'GET',
@@ -42,17 +40,15 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     });
   };
 
-
-  // $scope.allUsers = getUsers($http, $scope);
-  // console.log($scope.allUsers);
+  // get all previous players
   getUsers($http, $scope).then(function (res) {
-    console.log(res);
+    $scope.allPlayers = Array.prototype.slice.call(res);
   });
 
 
 
   $window.onkeypress = function(e) {
-    var newDir;  
+    var newDir;
     if (e.charCode === 119) {         // if the key is w, for up
       newDir = 1;
     } else if (e.charCode === 100) {  // key is d for right
@@ -69,6 +65,7 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
   // initialize game
   $scope.gameState = init();
   $scope.startGame = function () {
+    $scope.showTHIS = !$scope.showThis;
     // initialize the game
     $scope.gameState = init();
 
@@ -84,7 +81,6 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
 
   // check game states per frame
   var checkFrame = function (gameState, $scope, $interval) {
-  // advance the head
     advanceHead(gameState);
     // advance the body
     // advanceBody(gameState.head, gameState.body, gameState.food, gameState);
@@ -126,10 +122,5 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     $scope.canvasCtx.fillRect($scope.gameState.food.x, $scope.gameState.food.y, w, h);
 
   };
-
-  $scope.changeDirection = function ($scope) {
-    console.log('Detected keypress');
-  };
-
 });
 

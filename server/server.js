@@ -16,29 +16,46 @@ app.use(express.bodyParser());
 app.use(express.static('client'));
 
 app.get('/api/users', function (req, res) {
-  console.log('SERVER HEARS A GET REQUEST TO /API/USERS');
   DBcontroller.get(req.query, function (err, users) {
     if (err) {
       return res.json({error: err});
     } else {
-      console.log('no error, yay, got a response');
       return res.json(users);
     }
   });
 });
 
 app.post('/api/users', function (req, res) {
-  console.log('SERVER HEARS A POST REQUEST TO /API/USERS');
   DBcontroller.post(req.body, function (err, addedUser) {
     if (err) {
       return res.json({error: err});
     } else {
-      console.log('no error, yay, got a response');
       return res.json(addedUser);
     }
   });
 });
 
+app.delete('/api/users', function (req, res) {
+  DBcontroller.delete(req.body, function (err, deletedUsers) {
+    if (err) {
+      return res.json({error: err});
+    } else {
+      return res.json(deletedUsers);
+    }
+  });
+});
+
+app.put('/api/users', function (req, res) {
+  console.log(req.body.name);
+  // console.log(req.params);
+  DBcontroller.updateOne(req.body.name, req.body, function(err, student) {
+    if (err) {
+      return res.json({error: err});
+    } else {
+      return res.json(student);
+    }
+  });
+});
 
 app.listen(port);
 console.log('Server now listening on port ' + port);

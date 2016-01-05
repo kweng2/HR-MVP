@@ -9,15 +9,24 @@
     <script src="app.js"></script>
   </head>
   <body>
+    <!-- <div ng-show="inputPlayerName" ng-controller="inputNameCtrl" class="inputName"><h1>stuffffff</h1></div> -->
     <h1>Snake</h1>
-    <div class="gameBoard" ng-controller="gameCtrl">
+    <div class="gameBoard" ng-controller="gameCtrl" ng-view>
       <button ng-click="startGame()">Start Game!</button>
       <div ng-keypress="changeDirection()">
-      <canvas width={{gameState.gameWindow.width}} height={{gameState.gameWindow.height}} style="background-color:gray;" id="board" ></canvas>
+        <canvas width={{gameState.gameWindow.width}} height={{gameState.gameWindow.height}} style="background-color:gray;" id="board" ></canvas>
       </div>
-      <h2>Game state</h2>
-      Current Location: {{gameState.head.x}}, {{gameState.head.y}}<br>
-      Current Length: {{gameState.body.length}}
+      <div style="float:left;">
+        <h2>Game state</h2>
+        Current Location: {{gameState.head.x}}, {{gameState.head.y}}<br>
+        Current Length: {{gameState.body.length}}
+      </div>
+      <div style="float:left; margin-left:100px">
+        <h2>Leaderboard</h2>
+        <!-- <ul> -->
+          <li ng-repeat="player in allPlayers | orderBy: '-highScore'">{{player.name}}: {{player.highScore}}</li>
+        <!-- </ul> -->
+      </div>
     </div>
   </body>
 </html>
