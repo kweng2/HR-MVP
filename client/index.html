@@ -8,7 +8,7 @@
     <script src="app.js"></script>
     <link rel="stylesheet" type="text/css" href="style/style.css" title="Default stylesheet"/>
   </head>
-  <body ng-app='Snake' ng-controller="gameCtrl" ng-keypress="keyPress($event)">
+  <body ng-app='Snake' ng-controller="gameCtrl"  ng-keydown="keyPress($event)">
     <div id="container">
 
       <div class="cover" ng-show="showCover" ></div>
@@ -18,6 +18,7 @@
           <input type="text" placeholder="Player Name" ng-model="playerName">
         </form>
       </div>
+
       <div class="samePlayerMsg" ng-show="samePlayer">
         <h1>Existing Player Name</h1>
         <h1>K: Continue</h1>
@@ -25,9 +26,9 @@
       </div>
 
       <div class="gameInstruction" ng-show="gameInstruct">
-        <!-- <h1>Press K to start game</h1> -->
         <h1>K: Start Game</h1>
         <h1>J: Change Player</h1>
+        <h3>Use W, A, S, D, or Arrow Keys</h3>
       </div>
 
       <div class="gameBoard">
@@ -35,6 +36,16 @@
           <h1>Snake</h1>
           <!-- <button ng-click="startGame()">Start Game!</button> -->
         </span>
+
+        <span id="selector">
+          <select name="levelSelector" id="levelSelector" ng-model="level">
+            <option value='80'>Easy</option>
+            <option value='50' selected>Normal</option>
+            <option value='35'>Hard</option>
+            <option value='25'>Extreme</option>
+          </select>
+        </span>
+
         <span class="thisPlayer"><h1>{{playerName}}</h1></span>
         <div ng-keypress="changeDirection()">
           <canvas width={{gameState.gameWindow.width}} height={{gameState.gameWindow.height}} id="board" ></canvas>
@@ -44,11 +55,9 @@
           Current Score: {{gameState.body.length}}
         </div>
         <div class="leaderBoard">
-        <!-- <div style="float:right; margin-left:100px;" class="leaderBoard"> -->
           <h2>Leaderboard</h2>
           <ol>
             <li ng-repeat="player in allPlayers | orderBy: '-highScore' | limitTo:8">{{player.name}}: {{player.highScore}}</li>
-            <!-- <li ng-repeat="player in allPlayers | orderBy: '-highScore'">{{player.name}}: {{player.highScore}}</li> -->
           </ol>
         </div>
       </div>

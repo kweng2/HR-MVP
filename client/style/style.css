@@ -16,9 +16,9 @@ ol {
   display: block;
   position: relative;
   z-index: 8;
-  top: 200px;
+  top: 180px;
   width: 400px;
-  height: 100px;
+  height: 140px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -109,7 +109,12 @@ form input[type=text], form input[type=password] {
   margin-right: auto;
 }
 
-
+#selector {
+  display: block;
+  float:left;
+  margin-left:20px;
+  margin-top:30px;
+}
 
 
 
