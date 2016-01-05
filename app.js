@@ -2,9 +2,7 @@ var Snake = angular.module('Snake', []);
 
 Snake.controller('gameCtrl', function ($scope, $window, $interval) {
   $window.onkeypress = function(e) {
-    console.log(e.charCode);
-    var newDir;
-  
+    var newDir;  
     if (e.charCode === 119) {         // if the key is w, for up
       newDir = 1;
     } else if (e.charCode === 100) {  // key is d for right
@@ -14,10 +12,11 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval) {
     } else if (e.charCode === 97) {   // key is a for left
       newDir = -2;
     }
+    // apply new direction to head
     newDirection(newDir, $scope.gameState.head);
   };
 
-
+  // initialize game
   $scope.gameState = init();
   $scope.startGame = function () {
     // initialize the game
@@ -28,28 +27,31 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval) {
       checkFrame($scope.gameState, $scope, $interval);
     }, $scope.gameState.speed);
 
+    // initialize canvas to enable drawing
     var canvas = document.getElementById('board');
     $scope.canvasCtx = canvas.getContext('2d');
-
   };
 
+  // check game states per frame
   var checkFrame = function (gameState, $scope, $interval) {
   // advance the head
-    advanceHead(gameState.head, gameState.body, gameState.stepSize);
-    // console.log(gameState.head);
+    advanceHead(gameState);
     // advance the body
-    advanceBody(gameState.head, gameState.body, gameState.food);
+    // advanceBody(gameState.head, gameState.body, gameState.food, gameState);
+    advanceBody(gameState);
+    // check food situation
+    if(gameState.needFood) {
+      generateFood(gameState);
+    }
     // check collision with screen edge and self
     var collision = collideWithEdge(gameState.head, gameState.gameWindow) || collideWithSelf(gameState.head, gameState.body);
     // if there are collisions, end the loop
     if (collision) {
       $interval.cancel($scope.eachFrame);
-      // clearInterval(internalDriver);
       ///////////////////////////////////////////////////////////////
       ////////////////// DO SOMETHING ///////////////////////////////
       ///////////////////////////////////////////////////////////////
     } else {
-      // console.log('not collided');
       ///////////////////////////////////////////////////////////////
       ////////////////// DO SOMETHING ///////////////////////////////
       ///////////////////////////////////////////////////////////////
@@ -63,13 +65,16 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval) {
   // draw the game board
   var updateGameBoard = function ($scope) {
     $scope.canvasCtx.clearRect(0,0,$scope.gameState.gameWindow.width,$scope.gameState.gameWindow.height);
+    var w = $scope.gameState.stepSize;
+    var h = w;
     for (var i = 0; i < $scope.gameState.body.length; i++) {
       var x = $scope.gameState.body[i].x;
       var y = $scope.gameState.body[i].y;
-      var w = $scope.gameState.stepSize;
-      var h = w;
+
       $scope.canvasCtx.fillRect(x, y, w, h);
     }
+    $scope.canvasCtx.fillRect($scope.gameState.food.x, $scope.gameState.food.y, w, h);
+
   };
 
   $scope.changeDirection = function ($scope) {

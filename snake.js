@@ -19,7 +19,7 @@ var clone = function (obj) {
 
 // check collision with screen edge
 var collideWithEdge = function (head, gameWindow) {
-  if ( head.x < 0 || head.x > gameWindow.width || head.y < 0 || head.y > gameWindow.height ) {
+  if ( head.x < 0 || head.x >= gameWindow.width || head.y < 0 || head.y >= gameWindow.height ) {
     return true;
   } else {
     return false;
@@ -42,10 +42,6 @@ var collideWithSelf = function (head, body) {
 
 // check user input, takes user input, and outputs new direction
 var newDirection = function (newDir, head) {
-  //////////////////////////////////////////////////////////////////////
-  /////////// Assume there exists a variable called newD/////////
-  /////////////// MUST CHANGE THIS ASSUMPTION HERE   ///////////////////
-  //////////////////////////////////////////////////////////////////////
   if (newDir !== head.direction && newDir !== -head.direction) {
     // valid input, neither in the same direction nor reverse
     head.direction = newDir;
@@ -70,29 +66,22 @@ var moveHead = function (head, direction, stepSize) {
 };
 
 // body advancement
-var advanceBody = function (head, body, food) {
+// var advanceBody = function (head, body, food, gameState) {
+var advanceBody = function (gameState) {
   // Queue the body with the new head position
-  body.unshift(clone(head));
-  // if head is at a food, eating food, do not advance body
-  if (!(head.x === food.x && head.y === food.y)) {
+  gameState.body.unshift(clone(gameState.head));
+  // if head is at a food, eating food, do not advance body, create new food
+  if (gameState.head.x === gameState.food.x && gameState.head.y === gameState.food.y) {
+    gameState.needFood = true;
+  } else {
     // try to advance body, dequeue body, remove last item in body
-    body.pop();
+    gameState.body.pop();
   }
 };
 
 // Head advancement
-var advanceHead = function (head, body, stepSize) {
-  // firstly, move the head
-  // if user hit an arrow, update direction, after checking validity
-
-  //////////////////////////////////////////////////////////////////////
-  //////////// temporarily disable newDirection ////////////////////////
-  //////////////////////////////////////////////////////////////////////
-  // newDirection(userInput, head);
-
-  // advance the head
-  var newHead = moveHead(head, head.direction, stepSize);
-  head = newHead;
+var advanceHead = function (gameState) {
+  moveHead(gameState.head, gameState.head.direction, gameState.stepSize);
 };
 
 // define bodyGeneration
@@ -128,14 +117,23 @@ var init = function () {
     gameWindow: {
       width: 500,
       height: 400
-    }
+    },
+    needFood: false
   };
   gameState.body = generateBody(gameState.head, gameState.stepSize, gameState.startingLength);
   // return these variables
   return gameState;
 };
 
-
+// function to generate food
+var generateFood = function (gameState) {
+  console.log('generating new food');
+  var newFoodX = Math.floor((gameState.gameWindow.width - gameState.stepSize)/gameState.stepSize * Math.random()) * gameState.stepSize;
+  var newFoodY = Math.floor((gameState.gameWindow.height - gameState.stepSize)/gameState.stepSize * Math.random()) * gameState.stepSize;
+  gameState.food.x = newFoodX;
+  gameState.food.y = newFoodY;
+  gameState.needFood = false;
+};
 
 
 
