@@ -26,6 +26,7 @@ app.get('/api/users', function (req, res) {
 });
 
 app.post('/api/users', function (req, res) {
+  console.log('posting user', req.body);
   DBcontroller.post(req.body, function (err, addedUser) {
     if (err) {
       return res.json({error: err});

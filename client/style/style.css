@@ -23,17 +23,11 @@ h1 {
   display: block;
   position: relative;
   z-index: 10;
-  /*left: 70px;*/
-  top: 100px;
+  top: 200px;
   width: 400px;
   height: 100px;
   margin-left:auto;
   margin-right:auto;
-}
-
-.thisPlayer {
-  display: inline-block;
-  float: right;
 }
 
 #container {
@@ -44,9 +38,21 @@ h1 {
 
 .gameBoard {
   display: block;
+  position: absolute;
+  top: 0;
   width: 800px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.thisPlayer {
+  display: block;
+  float: right;
+}
+
+.title-left {
+  display: block;
+  float:left;
 }
 
 form input[type=text], form input[type=password] {

@@ -1,8 +1,9 @@
 var Snake = angular.module('Snake', []);
 
 Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
-  $scope.playerName = $window.playerName;
-  console.log($scope.playerName);
+
+  $scope.showInput = true;
+
   // initialize the controller
   var getUsers = function ($http, $scope) {
     return $http({
@@ -18,7 +19,8 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     return $http({
       method: 'POST',
       url: '/api/users',
-      data: 0//STUFF HERE
+      data: {name: $scope.playerName}
+      //STUFF HERE
       /////////////////////////////////////////////////
       //////////// substitute new high score //////////
       /////////////////////////////////////////////////
@@ -42,6 +44,15 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     });
   };
 
+  // When player enters a name
+  $scope.submitPlayerName = function () {
+    // console.log($scope.playerName);
+    // Hide the cover and hide the name input field
+    $scope.showInput = false;
+    addUsers($http, $scope);
+  };
+
+
   // get all previous players
   getUsers($http, $scope).then(function (res) {
     $scope.allPlayers = Array.prototype.slice.call(res);
@@ -50,7 +61,7 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
 
 
   $window.onkeypress = function(e) {
-    var newDir;
+    var newDir = null;
     if (e.charCode === 119) {         // if the key is w, for up
       newDir = 1;
     } else if (e.charCode === 100) {  // key is d for right
@@ -61,7 +72,9 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
       newDir = -2;
     }
     // apply new direction to head
-    newDirection(newDir, $scope.gameState.head);
+    if (newDir !== null) {
+      newDirection(newDir, $scope.gameState.head);
+    }
   };
 
   // initialize game
@@ -125,11 +138,3 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
   };
 });
 
-Snake.controller('inputNameCtrl', function ($scope, $window) {
-  $scope.showInput = true;
-  $scope.submitPlayerName = function () {
-    // console.log($scope.playerName);
-    $scope.showInput = false;
-    $window.playerName = $scope.playerName;
-  };
-});
