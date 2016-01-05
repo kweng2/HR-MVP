@@ -103,8 +103,8 @@ var init = function () {
   // declare game variables
   var gameState = {
     speed: 50,
-    stepSize: 5,
-    startingLength: 30,
+    stepSize: 10,
+    startingLength: 15,
     head: {
       x: 200,
       y: 100,
@@ -115,8 +115,8 @@ var init = function () {
       y: 200
     },
     gameWindow: {
-      width: 500,
-      height: 400
+      width: 800,
+      height: 500
     },
     needFood: false
   };

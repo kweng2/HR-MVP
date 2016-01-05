@@ -1,6 +1,8 @@
 var Snake = angular.module('Snake', []);
 
 Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
+  $scope.playerName = $window.playerName;
+  console.log($scope.playerName);
   // initialize the controller
   var getUsers = function ($http, $scope) {
     return $http({
@@ -65,7 +67,7 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
   // initialize game
   $scope.gameState = init();
   $scope.startGame = function () {
-    $scope.showTHIS = !$scope.showThis;
+    console.log($window.playerName);
     // initialize the game
     $scope.gameState = init();
 
@@ -120,7 +122,14 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
       $scope.canvasCtx.fillRect(x, y, w, h);
     }
     $scope.canvasCtx.fillRect($scope.gameState.food.x, $scope.gameState.food.y, w, h);
-
   };
 });
 
+Snake.controller('inputNameCtrl', function ($scope, $window) {
+  $scope.showInput = true;
+  $scope.submitPlayerName = function () {
+    // console.log($scope.playerName);
+    $scope.showInput = false;
+    $window.playerName = $scope.playerName;
+  };
+});
