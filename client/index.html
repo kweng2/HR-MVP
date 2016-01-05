@@ -39,14 +39,16 @@
         <div ng-keypress="changeDirection()">
           <canvas width={{gameState.gameWindow.width}} height={{gameState.gameWindow.height}} id="board" ></canvas>
         </div>
-        <div style="float:left; width:220px">
+        <div style="float:right; width:160px; text-align:right;">
           <h2>Game state</h2>
           Current Score: {{gameState.body.length}}
         </div>
-        <div style="float:right; margin-left:100px;">
+        <div class="leaderBoard">
+        <!-- <div style="float:right; margin-left:100px;" class="leaderBoard"> -->
           <h2>Leaderboard</h2>
           <ol>
-            <li ng-repeat="player in allPlayers | orderBy: '-highScore'">{{player.name}}: {{player.highScore}}</li>
+            <li ng-repeat="player in allPlayers | orderBy: '-highScore' | limitTo:8">{{player.name}}: {{player.highScore}}</li>
+            <!-- <li ng-repeat="player in allPlayers | orderBy: '-highScore'">{{player.name}}: {{player.highScore}}</li> -->
           </ol>
         </div>
       </div>

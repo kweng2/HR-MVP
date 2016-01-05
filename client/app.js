@@ -100,7 +100,6 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
       }
     } else if ($event.which === 106) {  // key is j to change player
       if (!this.showInput && !this.samePlayer && !this.inGame) {  // game end
-        console.log('got here');
         this.gameInstruct = false;
         this.showInput = true;
         this.showCover = true;

@@ -135,7 +135,6 @@ var init = function () {
 
 // function to generate food
 var generateFood = function (gameState) {
-  console.log('generating new food');
   var newFoodX = Math.floor((gameState.gameWindow.width - gameState.stepSize)/gameState.stepSize * Math.random()) * gameState.stepSize;
   var newFoodY = Math.floor((gameState.gameWindow.height - gameState.stepSize)/gameState.stepSize * Math.random()) * gameState.stepSize;
   gameState.food.x = newFoodX;

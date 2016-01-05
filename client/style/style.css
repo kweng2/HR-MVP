@@ -8,8 +8,8 @@ h1 {
 }
 
 ol {
-  margin-left: -20px;
-  margin-top: -10px;
+  margin-left: -18px;
+  /*margin-top: px;*/
 }
 
 .gameInstruction {
@@ -91,6 +91,12 @@ ol {
 .title-left {
   display: block;
   float:left;
+}
+
+.leaderBoard {
+  float:left;
+  /*background-color:blue;*/
+  /*width:170px;*/
 }
 
 form input[type=text], form input[type=password] {
