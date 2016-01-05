@@ -11,14 +11,18 @@
   <body ng-app='Snake' ng-controller="gameCtrl" ng-keypress="keyPress($event)">
     <div id="container">
 
-      <div class="cover" ng-show="showInput" >
+      <div class="cover" ng-show="showCover" ></div>
+      <div class="inputName" ng-show="showInput">
+        <h1>Input Player Name</h1>
+        <form ng-submit="submitPlayerName()" class="inputField">
+          <input type="text" placeholder="Player Name" ng-model="playerName">
+        </form>
       </div>
-        <div class="inputName" ng-show="showInput">
-          <h1>Input Player Name</h1>
-          <form ng-submit="submitPlayerName()" class="inputField">
-            <input type="text" placeholder="Player Name" ng-model="playerName">
-          </form>
-        </div>
+      <div class="samePlayerMsg" ng-show="samePlayer">
+        <h1>Existing Player Name</h1>
+        <h1>K: Continue</h1>
+        <h1>J: Change Player</h1>
+      </div>
 
       <div class="gameInstruction" ng-show="gameInstruct">
         <!-- <h1>Press K to start game</h1> -->

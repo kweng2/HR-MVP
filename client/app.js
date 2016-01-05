@@ -3,6 +3,8 @@ var Snake = angular.module('Snake', []);
 Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
   // Controller initialization code
   $scope.showInput = true;
+  $scope.showCover = true;
+  $scope.samePlayer = false;
   $scope.gameInstruct = false;
   $scope.inGame = false;
 
@@ -50,16 +52,29 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
 
   // When player enters a name, remove showInput, and show game instructions
   $scope.submitPlayerName = function () {
-    // Hide the cover and hide the name input field
+    // hide player name input
     $scope.showInput = false;
-    // Display game instruction
-    $scope.gameInstruct = true;
 
-    // after adding user, set current high score
+    // try to add a new user
     var addedUser = addUsers($http, $scope);
     addedUser.then(function(res){
-      $scope.currentHighScore = res.highScore;
-      $scope.currentName = res.name;
+      // debugger;
+      if(res.error === 'Player already exists') {   // Error, existing player
+        /////////////////////////////////////////////////
+        //////////// Warn, existing player  /////////////
+        /////////////////////////////////////////////////
+        $scope.samePlayer = true;
+        $scope.currentHighScore = res.player.highScore;
+        $scope.currentName = res.player.name;
+      } else {                                      // Success, added new player
+        $scope.currentHighScore = res.highScore;
+        $scope.currentName = res.name;
+
+        // Hide the cover and hide the name input field
+        $scope.showCover = false;
+        // Display game instruction
+        $scope.gameInstruct = true;
+      }
     });
   };
 
@@ -73,15 +88,24 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
       newDir = -1;
     } else if ($event.which === 97) {   // key is a for left
       newDir = -2;
-    } else if ($event.which === 107) {  // key is k for start Game
-      if(!this.inGame && !this.showInput) {
+    } else if ($event.which === 107) {  // key is k
+      if(!this.inGame && !this.showInput && !this.samePlayer) { // K to start game
         this.gameInstruct = false;
         this.startGame();
         this.inGame = true;
+      } else if (this.samePlayer) {   // same player warning, press K to continue
+        this.samePlayer = false;
+        this.showCover = false;
+        this.gameInstruct = true;
       }
-    } else if ($event.which === 106) {  // key is j to reset player
-      if (!this.showInput) {
+    } else if ($event.which === 106) {  // key is j to change player
+      if (!this.showInput && !this.samePlayer && !this.inGame) {  // game end
+        console.log('got here');
         this.gameInstruct = false;
+        this.showInput = true;
+        this.showCover = true;
+      } else if (this.samePlayer) {   // same player warning, press J to change player
+        this.samePlayer = false;
         this.showInput = true;
       }
     }

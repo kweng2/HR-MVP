@@ -27,7 +27,11 @@ app.get('/api/users', function (req, res) {
 app.post('/api/users', function (req, res) {
   // console.log('posting user', req.body);
   DBcontroller.post(req.body, function (err, addedUser) {
-    return res.json(addedUser);
+    if (err) {
+      return res.json({error: err, player: addedUser});
+    } else {
+      return res.json(addedUser);
+    }
   });
 });
 

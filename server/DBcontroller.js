@@ -8,7 +8,8 @@ exports.post = function(player, callback) {
   // if player already exists, do not add player
   Player.findOne({'name': player.name}, function (err, existingPlayer) {
     if(existingPlayer) {
-      callback(null, existingPlayer);
+      // callback(null, existingPlayer);
+      callback("Player already exists", existingPlayer);
     } else {
       Player.create(player, callback);
     }
