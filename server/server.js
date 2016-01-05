@@ -12,7 +12,8 @@ var dbURI = process.env.MONGOLAB_URI ||'mongodb://localhost/snakeDB';
 
 mongoose.connect(dbURI);
 
-app.use(express.bodyParser());
+// app.use(express.bodyParser());
+app.use(bodyParser());
 app.use(express.static('client'));
 
 app.get('/api/users', function (req, res) {
