@@ -1,6 +1,11 @@
 var Snake = angular.module('Snake', []);
 
 Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
+  // Controller initialization code
+  $scope.showInput = true;
+  $scope.gameInstruct = false;
+  $scope.inGame = false;
+
   // helper function to query database for previous players
   var getPlayers = function ($http, $scope) {
     return $http({
@@ -58,27 +63,31 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     });
   };
 
-  // Translate wasd and k to user inputs
-  $window.onkeypress = function(e) {
+  $scope.keyPress = function ($event) {
     var newDir = null;
-    if (e.charCode === 119) {         // if the key is w, for up
+    if ($event.which === 119) {         // if the key is w, for up
       newDir = 1;
-    } else if (e.charCode === 100) {  // key is d for right
+    } else if ($event.which === 100) {  // key is d for right
       newDir = 2;
-    } else if (e.charCode === 115) {  // key is s for down
+    } else if ($event.which === 115) {  // key is s for down
       newDir = -1;
-    } else if (e.charCode === 97) {   // key is a for left
+    } else if ($event.which === 97) {   // key is a for left
       newDir = -2;
-    } else if (e.charCode === 107) {  // key is k for start Game
-      if(!$scope.inGame && !$scope.showInput) {
-        $scope.gameInstruct = false;
-        $scope.startGame();
-        $scope.inGame = true;
+    } else if ($event.which === 107) {  // key is k for start Game
+      if(!this.inGame && !this.showInput) {
+        this.gameInstruct = false;
+        this.startGame();
+        this.inGame = true;
+      }
+    } else if ($event.which === 106) {  // key is j to reset player
+      if (!this.showInput) {
+        this.gameInstruct = false;
+        this.showInput = true;
       }
     }
     // apply new direction to head
     if (newDir !== null) {
-      newDirection(newDir, $scope.gameState.head);
+      newDirection(newDir, this.gameState.head);
     }
   };
 
@@ -115,6 +124,7 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
       $interval.cancel($scope.eachFrame);
       $scope.gameInstruct = true;
       $scope.inGame = false;
+      // $scope.showInput = true;
       ///////////////////////////////////////////////////////////////
       ////////////////// DO SOMETHING ///////////////////////////////
       ///////////////////////////////////////////////////////////////
@@ -154,11 +164,6 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
     }
     $scope.canvasCtx.fillRect($scope.gameState.food.x, $scope.gameState.food.y, w, h);
   };
-
-  // Controller initialization code
-  $scope.showInput = true;
-  $scope.gameInstruct = false;
-  $scope.inGame = false;
 
     // Update leaderboard
   getPlayers($http, $scope).then(function (res) {
