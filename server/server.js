@@ -1,11 +1,13 @@
 var express = require('express');
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+// var router = require('./router.js');
 
 
 var app = express();
 
 app.use(express.bodyParser());
-app.use(express.static(__dirname + '/client'));
-
+app.use(express.static('client'));
 
 
 var port = 5000;
