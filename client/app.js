@@ -43,7 +43,11 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
   };
 
 
-  $scope.allUsers = getUsers($http, $scope);
+  // $scope.allUsers = getUsers($http, $scope);
+  // console.log($scope.allUsers);
+  getUsers($http, $scope).then(function (res) {
+    console.log(res);
+  });
 
 
 
