@@ -111,23 +111,23 @@ var init = function () {
     growing: false,
     counter: 0,
     speed: 50,
-    stepSize: 13,
+    stepSize: 10,
     startingLength: 15,
     head: {
       x: 200,
       y: 100,
       direction: 2
     },
-    food: {
-      x: 200,
-      y: 200
-    },
+    food: {},
     gameWindow: {
-      width: 800,
-      height: 500
+      width: 600,
+      height: 400
     },
     needFood: false
   };
+  generateFood(gameState);
+  gameState.head.x = gameState.stepSize*13;
+  gameState.head.y = gameState.stepSize * 8;
   gameState.body = generateBody(gameState.head, gameState.stepSize, gameState.startingLength);
   // return these variables
   return gameState;

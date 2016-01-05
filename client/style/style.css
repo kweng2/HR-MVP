@@ -53,7 +53,7 @@ ol {
 #container {
   margin-left: auto;
   margin-right: auto;
-  width: 800px;
+  width: 600px;
 }
 
 #board {
@@ -66,7 +66,7 @@ ol {
   display: block;
   position: absolute;
   top: 0;
-  width: 800px;
+  width: 600px;
   margin-left: auto;
   margin-right: auto;
 }

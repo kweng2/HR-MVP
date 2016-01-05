@@ -99,7 +99,7 @@ Snake.controller('gameCtrl', function ($scope, $window, $interval, $http) {
   // check game states per frame
   var checkFrame = function (gameState, $scope, $interval) {
     // if($scope.gameState.body.length)
-    $scope.gameState.speed = 50 - (3 * Math.floor($scope.gameState.body.length/20));
+    $scope.gameState.speed = 100 - (3 * Math.floor($scope.gameState.body.length/20));
     // advance head
     advanceHead(gameState);
     // advance the body
