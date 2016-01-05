@@ -73,9 +73,15 @@ var advanceBody = function (gameState) {
   // if head is at a food, eating food, do not advance body, create new food
   if (gameState.head.x === gameState.food.x && gameState.head.y === gameState.food.y) {
     gameState.needFood = true;
+    gameState.growing = true;
+    gameState.counter++;
+  } else if (gameState.counter < gameState.growth && gameState.growing) {
+    gameState.counter++;
   } else {
     // try to advance body, dequeue body, remove last item in body
     gameState.body.pop();
+    gameState.counter = 0;
+    gameState.growing = false;
   }
 };
 
@@ -101,6 +107,9 @@ var generateBody = function (head, stepSize, startingLength) {
 var init = function () {
   // declare game variables
   var gameState = {
+    growth: 3,
+    growing: false,
+    counter: 0,
     speed: 50,
     stepSize: 10,
     startingLength: 15,
