@@ -14,8 +14,8 @@ When a player gets a personal highscore, it is recorded and stored in the databa
 Top 8 scores are displayed.
 
 ### Roadmap
-The game currently does not increase in speed as the snake gets longer, or as time passes. It is possible to implement a feature that increases the snake speed as time passes or as the snake gets longer. This is a potential feature that can make the game feel more progressive.
+- The game currently does not increase in speed as the snake gets longer, or as time passes. It is possible to implement a feature that increases the snake speed as time passes or as the snake gets longer. This is a potential feature that can make the game feel more progressive.
 
-Secondly, the scoring is linear, and increments by 3 each time the snake eats food. The scoring system can be more dynamic, and made a function of the time between eating, snake speed, and time. The basic building blocks are all present to make this possible. 
+- Secondly, the scoring is linear, and increments by 3 each time the snake eats food. The scoring system can be more dynamic, and made a function of the time between eating, snake speed, and time. The basic building blocks are all present to make this possible. 
 
-Thirdly, since most of the game is controlled by the keyboard already, the game difficulty selector can be refactored be controlled by the keyboard as well.
+- Thirdly, since most of the game is controlled by the keyboard already, the game difficulty selector can be refactored be controlled by the keyboard as well.
