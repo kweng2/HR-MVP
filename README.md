@@ -1,6 +1,6 @@
 ## README
 
-This is a project I completed while a student at Hack Reactor. It is the snake-game. Enjoy!
+This is a project I completed while a student at Hack Reactor. It is the snake-game. [Enjoy!](https://snake-kweng2.herokuapp.com/)
 
 ![image](http://i.imgur.com/hApgbLb.png?1)
 ![image](http://i.imgur.com/B58HoLh.png?1)
